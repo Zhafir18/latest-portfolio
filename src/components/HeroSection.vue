@@ -4,14 +4,18 @@ import { RouterLink } from 'vue-router'
 import { gsap } from 'gsap'
 import * as THREE from 'three'
 import { PROFILE } from '../data/index'
+import { applyMagnetic } from '../composables/useMagnetic'
+import { scrambleText } from '../composables/useScramble'
 
 const heroRef = ref<HTMLElement | null>(null)
 const canvasRef = ref<HTMLCanvasElement | null>(null)
+const nameRef = ref<HTMLElement | null>(null)
 const NAME = PROFILE.displayName
 const ROLE = `${PROFILE.role} · ${PROFILE.location}`
 
 let cleanupThree: (() => void) | undefined
 let gsapCtx: gsap.Context | undefined
+const cleanupFns: Array<() => void> = []
 
 // ── Three.js scene ────────────────────────────────────────────────────────────
 
@@ -103,6 +107,11 @@ function initThree(): () => void {
 onMounted(() => {
   cleanupThree = initThree()
 
+  const btnPrimary = heroRef.value?.querySelector<HTMLElement>('.btn-primary')
+  const btnGhost = heroRef.value?.querySelector<HTMLElement>('.btn-ghost')
+  if (btnPrimary) cleanupFns.push(applyMagnetic(btnPrimary, 0.26))
+  if (btnGhost) cleanupFns.push(applyMagnetic(btnGhost, 0.26))
+
   gsapCtx = gsap.context(() => {
     const tl = gsap.timeline({ defaults: { ease: 'expo.out' } })
 
@@ -116,21 +125,18 @@ onMounted(() => {
       { opacity: 0, y: 10, duration: 0.8 },
       0.15,
     )
-    // Characters reveal upward through hidden overflow
-    tl.from('.char', {
-      yPercent: 115,
-      duration: 1.3,
-      stagger: 0.04,
-    }, 0.25)
+    tl.add(() => {
+      if (nameRef.value) scrambleText(nameRef.value, NAME, 1050)
+    }, 0.3)
     tl.from(
       '.hero-bio',
       { opacity: 0, y: 14, duration: 0.9 },
-      '-=0.7',
+      0.72,
     )
     tl.from(
       '.hero-cta',
       { opacity: 0, y: 14, duration: 0.9 },
-      '-=0.7',
+      0.88,
     )
     tl.from(
       '.canvas-wrap',
@@ -140,7 +146,7 @@ onMounted(() => {
     tl.from(
       '.scroll-hint',
       { opacity: 0, duration: 1 },
-      '-=0.4',
+      1.5,
     )
   }, heroRef.value!)
 })
@@ -148,11 +154,16 @@ onMounted(() => {
 onUnmounted(() => {
   gsapCtx?.revert()
   cleanupThree?.()
+  cleanupFns.forEach((fn) => fn())
 })
 </script>
 
 <template>
   <section id="hero" ref="heroRef">
+    <div class="hero-bg" aria-hidden="true">
+      <div class="orb orb-coral"></div>
+      <div class="orb orb-teal"></div>
+    </div>
     <div class="hero-inner">
       <!-- Left: text content -->
       <div class="hero-text">
@@ -164,16 +175,7 @@ onUnmounted(() => {
         <p class="hero-first-name">Muhammad Zhafir</p>
 
         <h1 class="hero-name" aria-label="Ghiffari">
-          <span class="name-chars">
-            <span
-              class="char-wrap"
-              v-for="(ch, i) in NAME"
-              :key="i"
-              aria-hidden="true"
-            >
-              <span class="char">{{ ch }}</span>
-            </span>
-          </span>
+          <span class="name-text" ref="nameRef">{{ NAME }}</span>
         </h1>
 
         <p class="hero-bio">
@@ -215,6 +217,51 @@ onUnmounted(() => {
   overflow: hidden;
 }
 
+/* ── Gradient mesh background ────────────────────────────────────── */
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.orb-coral {
+  width: 560px;
+  height: 560px;
+  background: radial-gradient(circle at center, rgba(255, 107, 53, 0.13), transparent 70%);
+  filter: blur(64px);
+  top: -180px;
+  right: -100px;
+  animation: orb-a 15s ease-in-out infinite alternate;
+}
+
+.orb-teal {
+  width: 440px;
+  height: 440px;
+  background: radial-gradient(circle at center, rgba(45, 212, 191, 0.09), transparent 70%);
+  filter: blur(56px);
+  bottom: -60px;
+  left: 8%;
+  animation: orb-b 19s ease-in-out infinite alternate;
+}
+
+@keyframes orb-a {
+  from { transform: translate(0, 0) scale(1); }
+  to   { transform: translate(-48px, 36px) scale(1.07); }
+}
+
+@keyframes orb-b {
+  from { transform: translate(0, 0) scale(1); }
+  to   { transform: translate(32px, -24px) scale(0.95); }
+}
+
 .hero-inner {
   display: grid;
   grid-template-columns: 1.1fr 0.9fr;
@@ -223,6 +270,8 @@ onUnmounted(() => {
   max-width: 1340px;
   margin: 0 auto;
   width: 100%;
+  position: relative;
+  z-index: 1;
 }
 
 /* ── Role label ───────────────────────────────────────────────────── */
@@ -272,19 +321,8 @@ onUnmounted(() => {
   margin-bottom: 2.25rem;
 }
 
-.name-chars {
-  display: flex;
-  flex-wrap: nowrap;
-}
-
-.char-wrap {
-  overflow: hidden;
-  display: inline-block;
-  line-height: 0.92;
-}
-
-.char {
-  display: inline-block;
+.name-text {
+  display: block;
 }
 
 /* ── Bio ──────────────────────────────────────────────────────────── */
@@ -318,7 +356,6 @@ onUnmounted(() => {
 }
 
 .btn-primary:hover {
-  transform: translateY(-3px);
   box-shadow: 0 10px 28px rgba(255, 107, 53, 0.28);
 }
 
@@ -371,6 +408,7 @@ onUnmounted(() => {
   flex-direction: column;
   align-items: center;
   gap: 0.7rem;
+  z-index: 1;
 }
 
 .scroll-label {

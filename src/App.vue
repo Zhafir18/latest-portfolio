@@ -5,6 +5,7 @@ import { gsap } from 'gsap'
 import NavBar from './components/NavBar.vue'
 import PreLoader from './components/PreLoader.vue'
 import PageLoader from './components/PageLoader.vue'
+import { lenis } from './lib/lenis'
 
 const loaded = ref(false)
 const pageLoaderRef = ref<InstanceType<typeof PageLoader> | null>(null)
@@ -16,6 +17,7 @@ router.beforeEach(() => {
   pageLoaderRef.value?.start()
 })
 router.afterEach(() => {
+  lenis.scrollTo(0, { immediate: true })
   pageLoaderRef.value?.finish()
 })
 
@@ -50,6 +52,14 @@ onMounted(() => {
   <PreLoader v-if="!loaded" @done="loaded = true" />
   <PageLoader ref="pageLoaderRef" />
   <div class="cursor-dot" ref="cursorRef" aria-hidden="true"></div>
+  <!-- Grain texture overlay -->
+  <svg class="grain-overlay" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+    <filter id="__grain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch" />
+      <feColorMatrix type="saturate" values="0" />
+    </filter>
+    <rect width="100%" height="100%" filter="url(#__grain)" />
+  </svg>
   <NavBar />
   <RouterView v-slot="{ Component }">
     <Transition name="page" mode="out-in">
@@ -76,6 +86,16 @@ onMounted(() => {
 
 @media (pointer: coarse) {
   .cursor-dot { display: none; }
+}
+
+.grain-overlay {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 9997;
+  opacity: 0.038;
 }
 </style>
 
