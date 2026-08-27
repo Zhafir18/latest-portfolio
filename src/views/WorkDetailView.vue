@@ -71,6 +71,10 @@ onUnmounted(() => ctx?.revert())
             <span class="meta-label">Year</span>
             <span class="meta-value">{{ project.year }}</span>
           </span>
+          <span v-if="project.isInternal" class="meta-item meta-item--internal">
+            <span class="meta-label">Access</span>
+            <span class="meta-value meta-value--internal">Internal System</span>
+          </span>
         </div>
       </div>
     </header>
@@ -231,6 +235,16 @@ main { min-height: 100svh; }
   font-weight: 700;
   font-size: 1rem;
   color: var(--text);
+}
+
+.meta-value--internal {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent-2);
+  opacity: 0.7;
 }
 
 /* ── Content grid ────────────────────────────────────────────────── */

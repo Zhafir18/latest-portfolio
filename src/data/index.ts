@@ -5,7 +5,7 @@ export const PROFILE = {
   location: 'Jakarta, Indonesia',
   headline: 'Crafting Scalable & Secure Modern Web Systems',
   bio: "Software Engineer at Indocyber Global Teknologi with 2+ years building enterprise web applications for government institutions and state-owned enterprises — from electronic signature systems at DPR RI to asset management platforms for PLN.",
-  bioDetail: "My stack spans Vue.js, Angular, and Laravel, with a consistent emphasis on security (OWASP), performance, and deep integration with government data systems.",
+  bioDetail: "My stack spans Vue.js, Angular, Laravel, and Python/Django, with a consistent emphasis on security (OWASP), performance, and deep integration with government data systems.",
   email: 'm.zhafirghiffari@gmail.com',
   linkedin: 'https://linkedin.com/in/muhammad-zhafir-ghiffari',
   github: 'https://github.com/Zhafir18',
@@ -25,7 +25,7 @@ export const PROJECTS = [
     challenge: 'Integrating a legally-compliant e-signature workflow into an existing document management system while maintaining complete audit trails for all signed documents and meeting government security standards.',
     impact: 'Eliminated manual document circulation processes, enabling fully digital approval workflows and significantly reducing turnaround time across multiple departments.',
     tags: ['Laravel', 'MVC', 'e-Signature'],
-    link: '#',
+    isInternal: true,
   },
   {
     id: '02',
@@ -39,7 +39,7 @@ export const PROJECTS = [
     challenge: 'Rendering thousands of geospatial asset markers on an interactive map without degrading performance, while keeping the data synchronized with a REST API in real time.',
     impact: 'Provided PLN with a centralized, map-based view of all property assets, replacing disconnected spreadsheet records and enabling faster asset audits.',
     tags: ['AngularJS', 'REST API', 'Interactive Maps'],
-    link: '#',
+    isInternal: true,
   },
   {
     id: '03',
@@ -53,7 +53,7 @@ export const PROJECTS = [
     challenge: 'Migrating mapping infrastructure from a proprietary provider to OpenLayers with OSM while applying OWASP security hardening across all user-facing input surfaces and adding SSR for faster initial load.',
     impact: 'Improved page load performance through SSR and eliminated vendor lock-in on mapping, reducing operational cost while increasing security compliance coverage.',
     tags: ['AngularJS', 'OpenLayers', 'OWASP', 'SSR'],
-    link: '#',
+    isInternal: true,
   },
   {
     id: '04',
@@ -67,7 +67,7 @@ export const PROJECTS = [
     challenge: "Unifying authentication across multiple independently-built internal applications with different auth mechanisms, while enforcing OWASP-compliant session management and role-based access control.",
     impact: "Reduced friction for PLN Communication Division staff by providing one secure login point across all internal tools, and improved security posture through centralized session control.",
     tags: ['Vue.js', 'SSO', 'OWASP', 'Auth'],
-    link: '#',
+    isInternal: true,
   },
   {
     id: '05',
@@ -81,23 +81,25 @@ export const PROJECTS = [
     challenge: 'Handling large media file uploads reliably over unstable connections — standard multipart uploads would fail mid-transfer with no recovery path, losing user progress.',
     impact: 'Chunked upload with resume support made large file transfers reliable even on slow connections, enabling the client to onboard high-volume media workflows with confidence.',
     tags: ['Vue.js', 'Chunked Upload', 'Media Storage'],
-    link: '#',
+    isInternal: true,
   },
 ]
 
 export const STACK = [
-  { name: 'Vue.js',      role: 'Primary frontend framework', category: 'Frontend' },
-  { name: 'Angular',     role: 'Enterprise frontend',        category: 'Frontend' },
-  { name: 'TypeScript',  role: 'Language of choice',         category: 'Frontend' },
-  { name: 'JavaScript',  role: 'Core scripting',             category: 'Frontend' },
-  { name: 'Laravel',     role: 'Full-stack backend',         category: 'Backend'  },
-  { name: 'Spring Boot', role: 'Enterprise backend',         category: 'Backend'  },
-  { name: 'PostgreSQL',  role: 'Primary database',           category: 'Database' },
-  { name: 'MySQL',       role: 'Relational storage',         category: 'Database' },
-  { name: 'REST API',    role: 'System integration',         category: 'Tools'    },
-  { name: 'OWASP',       role: 'Security standards',         category: 'Tools'    },
-  { name: 'SSR',         role: 'Server-side rendering',      category: 'Tools'    },
-  { name: 'Git',         role: 'Version control',            category: 'Tools'    },
+  { name: 'Vue.js',      role: 'Primary frontend framework', category: 'Frontend', proficiency: 'Expert'     },
+  { name: 'Angular',     role: 'Enterprise frontend',        category: 'Frontend', proficiency: 'Proficient' },
+  { name: 'TypeScript',  role: 'Language of choice',         category: 'Frontend', proficiency: 'Proficient' },
+  { name: 'JavaScript',  role: 'Core scripting',             category: 'Frontend', proficiency: 'Expert'     },
+  { name: 'Laravel',     role: 'Full-stack backend',         category: 'Backend',  proficiency: 'Proficient' },
+  { name: 'Python',      role: 'Backend scripting',          category: 'Backend',  proficiency: 'Proficient' },
+  { name: 'Django',      role: 'Web framework (Python)',     category: 'Backend',  proficiency: 'Proficient' },
+  { name: 'Spring Boot', role: 'Enterprise backend',         category: 'Backend',  proficiency: 'Familiar'   },
+  { name: 'PostgreSQL',  role: 'Primary database',           category: 'Database', proficiency: 'Proficient' },
+  { name: 'MySQL',       role: 'Relational storage',         category: 'Database', proficiency: 'Proficient' },
+  { name: 'REST API',    role: 'System integration',         category: 'Tools',    proficiency: 'Expert'     },
+  { name: 'OWASP',       role: 'Security standards',         category: 'Tools',    proficiency: 'Proficient' },
+  { name: 'SSR',         role: 'Server-side rendering',      category: 'Tools',    proficiency: 'Proficient' },
+  { name: 'Git',         role: 'Version control',            category: 'Tools',    proficiency: 'Expert'     },
 ]
 
 export const EXPERIENCE = [

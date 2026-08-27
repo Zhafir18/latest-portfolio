@@ -49,7 +49,10 @@ onUnmounted(() => { ctx?.revert() })
             <span class="card-bg-num" aria-hidden="true">{{ p.id }}</span>
             <div class="card-top">
               <span class="card-num">{{ p.id }}</span>
-              <span class="card-org">{{ p.org }}</span>
+              <div class="card-top-right">
+                <span v-if="p.isInternal" class="card-badge-internal" title="Government/enterprise system — not publicly accessible">Internal</span>
+                <span class="card-org">{{ p.org }}</span>
+              </div>
             </div>
             <div class="card-title-group">
               <h2 class="card-title">{{ p.title }}</h2>
@@ -200,6 +203,12 @@ main { min-height: 100svh; }
   margin-bottom: 2rem;
 }
 
+.card-top-right {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
 .card-num {
   font-family: var(--font-mono);
   font-size: 0.62rem;
@@ -215,6 +224,18 @@ main { min-height: 100svh; }
   text-transform: uppercase;
   color: var(--text);
   opacity: 0.25;
+}
+
+.card-badge-internal {
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent-2);
+  border: 1px solid rgba(45, 212, 191, 0.3);
+  padding: 0.15rem 0.45rem;
+  border-radius: 2px;
+  opacity: 0.6;
 }
 
 .card-title-group {

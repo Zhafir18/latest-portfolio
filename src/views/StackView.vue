@@ -72,6 +72,7 @@ onUnmounted(() => { ctx?.revert() })
                 <span class="row-name">{{ item.name }}</span>
                 <span class="row-sep" aria-hidden="true">—</span>
                 <span class="row-role">{{ item.role }}</span>
+                <span class="row-proficiency" :data-level="item.proficiency">{{ item.proficiency }}</span>
               </li>
             </ul>
           </div>
@@ -196,7 +197,23 @@ main { min-height: 100svh; }
   letter-spacing: 0.1em;
   color: var(--text);
   opacity: 0.4;
+  flex: 1;
 }
+
+.row-proficiency {
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.55rem;
+  border: 1px solid currentColor;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.row-proficiency[data-level='Expert']     { color: var(--accent);   opacity: 0.85; }
+.row-proficiency[data-level='Proficient'] { color: var(--accent-2); opacity: 0.75; }
+.row-proficiency[data-level='Familiar']   { color: var(--text);     opacity: 0.3;  }
 
 /* ── Responsive ──────────────────────────────────────────────────── */
 @media (max-width: 860px) {
