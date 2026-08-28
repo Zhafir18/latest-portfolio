@@ -179,8 +179,8 @@ onUnmounted(() => {
         </h1>
 
         <p class="hero-bio">
-          Specializing in enterprise-scale frontend architecture<br />
-          and backend integration — delivering secure,<br />
+          Specializing in enterprise-scale frontend architecture
+          and backend integration — delivering secure,
           robust systems for government and SOE sectors.
         </p>
 
@@ -454,8 +454,8 @@ onUnmounted(() => {
 }
 
 @media (max-width: 480px) {
-  .hero-name {
-    font-size: clamp(52px, 14vw, 80px);
-  }
+  #hero { padding: 5.5rem 1.25rem 3.5rem; }
+  .hero-name { font-size: clamp(42px, 11.5vw, 68px); }
+  .scroll-hint { left: 1.25rem; }
 }
 </style>

@@ -594,4 +594,9 @@ onUnmounted(() => {
   .work-row { grid-template-columns: 2rem 1fr; }
   .wr-sub { display: none; }
 }
+
+@media (max-width: 480px) {
+  .ov-section { padding: 4rem 1.25rem; }
+  .ticker-wrap { margin: 0 -1.25rem; }
+}
 </style>

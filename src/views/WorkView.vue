@@ -297,4 +297,10 @@ main { min-height: 100svh; }
 @media (min-width: 901px) and (max-width: 1100px) {
   .projects-grid { grid-template-columns: repeat(2, 1fr); }
 }
+
+@media (max-width: 480px) {
+  .page-header { padding: 6rem 1.25rem 3rem; }
+  .page-section { padding: 3rem 1.25rem; }
+  .project-card { padding: 1.75rem 1.25rem; }
+}
 </style>

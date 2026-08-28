@@ -369,9 +369,17 @@ a.pnav-item:hover { background: var(--surface); }
   .page-header { padding: 7rem 1.75rem 3.5rem; }
   .page-section { padding: 4rem 1.75rem; }
   .detail-grid { grid-template-columns: 1fr; }
+  .detail-block { padding: 2rem; }
   .detail-block--full { grid-column: 1; }
   .project-nav { grid-template-columns: 1fr; }
   .pnav-item--next { border-left: none; border-top: 1px solid var(--border); text-align: left; align-items: flex-start; }
   .pnav-item { padding: 2rem 1.75rem; }
+}
+
+@media (max-width: 480px) {
+  .page-header { padding: 6rem 1.25rem 3rem; }
+  .page-section { padding: 3rem 1.25rem; }
+  .detail-block { padding: 1.5rem 1.25rem; }
+  .pnav-item { padding: 1.5rem 1.25rem; }
 }
 </style>

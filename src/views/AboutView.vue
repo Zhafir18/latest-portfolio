@@ -392,4 +392,9 @@ main { min-height: 100svh; }
   .bio-grid { grid-template-columns: 1fr; gap: 2.5rem; }
   .exp-header, .edu-header { flex-direction: column; gap: 0.5rem; }
 }
+
+@media (max-width: 480px) {
+  .page-header { padding: 6rem 1.25rem 3rem; }
+  .page-section { padding: 3rem 1.25rem; }
+}
 </style>

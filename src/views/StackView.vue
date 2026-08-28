@@ -221,4 +221,11 @@ main { min-height: 100svh; }
   .page-section { padding: 4rem 1.75rem; }
   .stack-categories { grid-template-columns: 1fr; gap: 3rem; }
 }
+
+@media (max-width: 480px) {
+  .page-header { padding: 6rem 1.25rem 3rem; }
+  .page-section { padding: 3rem 1.25rem; }
+  .stack-row { flex-wrap: wrap; gap: 0.5rem 1rem; }
+  .row-role { width: 100%; order: 3; }
+}
 </style>

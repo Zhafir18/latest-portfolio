@@ -274,9 +274,14 @@ main {
 .cv-download:hover .cv-download-arrow { transform: translateY(4px); }
 
 /* ── Responsive ──────────────────────────────────────────────────── */
-@media (max-width: 780px) {
+@media (max-width: 860px) {
   .page-header { padding: 7rem 1.75rem 4rem; }
   .page-section { padding: 4rem 1.75rem; }
   .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
+}
+
+@media (max-width: 480px) {
+  .page-header { padding: 6rem 1.25rem 3rem; }
+  .page-section { padding: 3rem 1.25rem; }
 }
 </style>
