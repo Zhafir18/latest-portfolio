@@ -4,6 +4,7 @@ import { RouterLink } from 'vue-router'
 import { gsap } from 'gsap'
 import { PROJECTS } from '../data/index'
 import FooterBar from '../components/FooterBar.vue'
+import ProjectVisual from '../components/ProjectVisual.vue'
 
 const pageRef = ref<HTMLElement | null>(null)
 let ctx: gsap.Context
@@ -46,21 +47,24 @@ onUnmounted(() => { ctx?.revert() })
       <div class="section-inner">
         <div class="projects-grid">
           <RouterLink :to="`/work/${p.slug}`" class="project-card" v-for="p in PROJECTS" :key="p.id">
-            <span class="card-bg-num" aria-hidden="true">{{ p.id }}</span>
-            <div class="card-top">
-              <span class="card-num">{{ p.id }}</span>
-              <div class="card-top-right">
-                <span v-if="p.isInternal" class="card-badge-internal" title="Government/enterprise system — not publicly accessible">Internal</span>
-                <span class="card-org">{{ p.org }}</span>
+            <ProjectVisual :slug="p.slug" />
+            <div class="card-body">
+              <span class="card-bg-num" aria-hidden="true">{{ p.id }}</span>
+              <div class="card-top">
+                <span class="card-num">{{ p.id }}</span>
+                <div class="card-top-right">
+                  <span v-if="p.isInternal" class="card-badge-internal" title="Government/enterprise system — not publicly accessible">Internal</span>
+                  <span class="card-org">{{ p.org }}</span>
+                </div>
               </div>
-            </div>
-            <div class="card-title-group">
-              <h2 class="card-title">{{ p.title }}</h2>
-              <span class="card-subtitle">{{ p.subtitle }}</span>
-            </div>
-            <p class="card-desc">{{ p.desc }}</p>
-            <div class="card-tags">
-              <span class="tag" v-for="t in p.tags" :key="t">{{ t }}</span>
+              <div class="card-title-group">
+                <h2 class="card-title">{{ p.title }}</h2>
+                <span class="card-subtitle">{{ p.subtitle }}</span>
+              </div>
+              <p class="card-desc">{{ p.desc }}</p>
+              <div class="card-tags">
+                <span class="tag" v-for="t in p.tags" :key="t">{{ t }}</span>
+              </div>
             </div>
           </RouterLink>
         </div>
@@ -150,7 +154,6 @@ main { min-height: 100svh; }
 /* ── Card ─────────────────────────────────────────────────────────── */
 .project-card {
   background: var(--surface);
-  padding: 2.5rem;
   display: flex;
   flex-direction: column;
   border-top: 2px solid transparent;
@@ -160,6 +163,14 @@ main { min-height: 100svh; }
   text-decoration: none;
   color: inherit;
   cursor: pointer;
+}
+
+.card-body {
+  padding: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  position: relative;
 }
 
 .project-card::before {
@@ -287,6 +298,18 @@ main { min-height: 100svh; }
   padding: 0.3rem 0.65rem;
 }
 
+/* ── Project visual hover triggers ──────────────────────────────── */
+.project-card:hover :deep(.v-line) {
+  stroke-dashoffset: 0;
+  opacity: 0.72;
+}
+.project-card:hover :deep(.v-fade) {
+  opacity: 0.58;
+}
+.project-card:hover :deep(.v-dot) {
+  opacity: 1;
+}
+
 /* ── Responsive ──────────────────────────────────────────────────── */
 @media (max-width: 900px) {
   .page-header { padding: 7rem 1.75rem 4rem; }
@@ -301,6 +324,6 @@ main { min-height: 100svh; }
 @media (max-width: 480px) {
   .page-header { padding: 6rem 1.25rem 3rem; }
   .page-section { padding: 3rem 1.25rem; }
-  .project-card { padding: 1.75rem 1.25rem; }
+  .card-body { padding: 1.75rem 1.25rem; }
 }
 </style>
