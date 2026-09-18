@@ -3,6 +3,7 @@ import { ref, onMounted, onUnmounted } from 'vue'
 import { RouterLink, useRouter } from 'vue-router'
 import { gsap } from 'gsap'
 import { useTheme } from '../composables/useTheme'
+import { lenis } from '../lib/lenis'
 
 const navEl = ref<HTMLElement | null>(null)
 const scrolled = ref(false)
@@ -10,7 +11,9 @@ const menuOpen = ref(false)
 const { theme, toggle } = useTheme()
 const router = useRouter()
 
-const onScroll = () => { scrolled.value = window.scrollY > 60 }
+// Lenis takes over scrolling and doesn't dispatch native window scroll events,
+// so the scrolled state must come from Lenis's own scroll emitter.
+const onScroll = () => { scrolled.value = lenis.scroll > 60 }
 
 const toggleMenu = () => {
   menuOpen.value = !menuOpen.value
@@ -26,11 +29,11 @@ const closeMenu = () => {
 router.afterEach(closeMenu)
 
 onMounted(() => {
-  window.addEventListener('scroll', onScroll, { passive: true })
+  lenis.on('scroll', onScroll)
   gsap.from(navEl.value, { yPercent: -100, duration: 0.9, ease: 'expo.out', delay: 1.2 })
 })
 onUnmounted(() => {
-  window.removeEventListener('scroll', onScroll)
+  lenis.off('scroll', onScroll)
   document.body.style.overflow = ''
 })
 </script>
